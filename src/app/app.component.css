@@ -6,3 +6,9 @@ p {
   width: 500px;
   height: 40px;
 }
+
+table,
+th,
+td {
+  border: 1px solid black;
+}

@@ -17,6 +17,8 @@ import {
 export class AppComponent implements OnInit, OnDestroy {
   selectedOperator: string = 'flatMap';
 
+  arr = [];
+
   flatMappedObservableStream: Observable<any>;
   switchMappedObservableStream: Observable<any>;
   concatMappedObservableStream: Observable<any>;
@@ -39,40 +41,49 @@ export class AppComponent implements OnInit, OnDestroy {
     // flatmap
     this.flatMappedObservableStream = this.numberStream$.pipe(
       flatMap(number =>
-        this.letterStream$.pipe(map(letter => [number, letter]))
+        this.letterStream$.pipe(map(letter => number + ' : ' + letter))
       )
     );
 
     // switchmap
     this.switchMappedObservableStream = this.numberStream$.pipe(
       switchMap(number =>
-        this.letterStream$.pipe(map(letter => [number, letter]))
+        this.letterStream$.pipe(map(letter => number + ' : ' + letter))
       )
     );
 
     // concatmap
     this.concatMappedObservableStream = this.numberStream$.pipe(
       concatMap(number =>
-        this.letterStream$.pipe(map(letter => [number, letter]))
+        this.letterStream$.pipe(map(letter => number + ' : ' + letter))
       )
     );
 
     // exhaustmap
     this.exhaustMappedObservableStream = this.numberStream$.pipe(
       exhaustMap(number =>
-        this.letterStream$.pipe(map(letter => [number, letter]))
+        this.letterStream$.pipe(map(letter => number + ' : ' + letter))
       )
     );
 
     //subscription------
-
-    this.currentSubscription = this.flatMappedObservableStream.subscribe(res =>
-      console.log(res)
+    let self = this;
+    self.arr = [];
+    this.currentSubscription = this.flatMappedObservableStream.subscribe(
+      res => {
+        console.log(res);
+        self.arr.push(res);
+      }
     );
   }
 
   ngOnDestroy(): void {
+    this.clearArray();
     this.unsubscribeCurrentSubscription();
+  }
+
+  clearArray() {
+    this.arr = [];
   }
 
   unsubscribeCurrentSubscription() {
@@ -82,6 +93,7 @@ export class AppComponent implements OnInit, OnDestroy {
   onChangeOperator() {
     console.log(`Operator is ${this.selectedOperator}`);
     this.unsubscribeCurrentSubscription();
+    this.clearArray();
 
     switch (this.selectedOperator) {
       case 'switchMap':

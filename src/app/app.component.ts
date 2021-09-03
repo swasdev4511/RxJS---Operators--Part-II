@@ -11,8 +11,10 @@ export class AppComponent implements OnInit, OnDestroy {
   numSubscription: Subscription;
   letterSubscription: Subscription;
 
+  // create number stream
   numberStream$ = interval(1000).pipe(take(3));
 
+  // create character stream
   a = 'a'.charCodeAt(0);
   letterStream$ = interval(500).pipe(
     take(3),

@@ -1,3 +1,15 @@
 <h3>Welcomer to RxJS !!!</h3>
 
 <span>flatmap / switchmap / concatmap / exhaustmap</span>
+<br />
+<br />
+<select
+  [(ngModel)]="selectedOperator"
+  (ngModelChange)="onChangeOperator()"
+  clas="cust-sel"
+>
+  <option value="flatMap" selected>flatMap</option>
+  <option value="switchMap">switchMap</option>
+  <option value="concatMap">concatMap</option>
+  <option value="exhaustMap">exhaustMap</option>
+</select>

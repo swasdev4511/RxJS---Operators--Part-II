@@ -68,7 +68,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     //subscription------
     let self = this;
-    self.arr = [];
+    this.clearArray();
     this.currentSubscription = this.flatMappedObservableStream.subscribe(
       res => {
         console.log(res);
@@ -95,39 +95,27 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscribeCurrentSubscription();
     this.clearArray();
 
-    let self = this;
-    switch (self.selectedOperator) {
+    switch (this.selectedOperator) {
       case 'switchMap':
-        self.currentSubscription = self.switchMappedObservableStream.subscribe(
-          res => {
-            console.log(res);
-            self.arr.push(res);
-          }
-        );
+        this.addSubscription(this.switchMappedObservableStream);
         break;
       case 'concatMap':
-        self.currentSubscription = self.concatMappedObservableStream.subscribe(
-          res => {
-            console.log(res);
-            self.arr.push(res);
-          }
-        );
+        this.addSubscription(this.concatMappedObservableStream);
         break;
       case 'exhaustMap':
-        self.currentSubscription = self.exhaustMappedObservableStream.subscribe(
-          res => {
-            console.log(res);
-            self.arr.push(res);
-          }
-        );
+        this.addSubscription(this.exhaustMappedObservableStream);
         break;
       default:
-        this.currentSubscription = this.flatMappedObservableStream.subscribe(
-          res => {
-            console.log(res);
-            self.arr.push(res);
-          }
-        );
+        this.addSubscription(this.flatMappedObservableStream);
     }
+  }
+  addSubscription(stream) {
+    let self = this;
+    self.currentSubscription = stream.exhaustMappedObservableStream.subscribe(
+      res => {
+        console.log(res);
+        self.arr.push(res);
+      }
+    );
   }
 }

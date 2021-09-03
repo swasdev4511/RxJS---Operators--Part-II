@@ -77,17 +77,12 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-    this.clearArray();
-    this.unsubscribeCurrentSubscription();
-  }
-
-  clearArray() {
-    this.arr = [];
-  }
-
-  unsubscribeCurrentSubscription() {
-    this.currentSubscription.unsubscribe();
+  addSubscription(stream) {
+    let self = this;
+    self.currentSubscription = stream.subscribe(res => {
+      console.log(res);
+      self.arr.push(res);
+    });
   }
 
   onChangeOperator() {
@@ -109,13 +104,17 @@ export class AppComponent implements OnInit, OnDestroy {
         this.addSubscription(this.flatMappedObservableStream);
     }
   }
-  addSubscription(stream) {
-    let self = this;
-    self.currentSubscription = stream.exhaustMappedObservableStream.subscribe(
-      res => {
-        console.log(res);
-        self.arr.push(res);
-      }
-    );
+
+  clearArray() {
+    this.arr = [];
+  }
+
+  unsubscribeCurrentSubscription() {
+    this.currentSubscription.unsubscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.clearArray();
+    this.unsubscribeCurrentSubscription();
   }
 }

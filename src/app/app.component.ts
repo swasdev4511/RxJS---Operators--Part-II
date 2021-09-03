@@ -95,25 +95,38 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscribeCurrentSubscription();
     this.clearArray();
 
-    switch (this.selectedOperator) {
+    let self = this;
+    switch (self.selectedOperator) {
       case 'switchMap':
-        this.currentSubscription = this.switchMappedObservableStream.subscribe(
-          res => console.log(res)
+        self.currentSubscription = self.switchMappedObservableStream.subscribe(
+          res => {
+            console.log(res);
+            self.arr.push(res);
+          }
         );
         break;
       case 'concatMap':
-        this.currentSubscription = this.concatMappedObservableStream.subscribe(
-          res => console.log(res)
+        self.currentSubscription = self.concatMappedObservableStream.subscribe(
+          res => {
+            console.log(res);
+            self.arr.push(res);
+          }
         );
         break;
       case 'exhaustMap':
-        this.currentSubscription = this.exhaustMappedObservableStream.subscribe(
-          res => console.log(res)
+        self.currentSubscription = self.exhaustMappedObservableStream.subscribe(
+          res => {
+            console.log(res);
+            self.arr.push(res);
+          }
         );
         break;
       default:
         this.currentSubscription = this.flatMappedObservableStream.subscribe(
-          res => console.log(res)
+          res => {
+            console.log(res);
+            self.arr.push(res);
+          }
         );
     }
   }

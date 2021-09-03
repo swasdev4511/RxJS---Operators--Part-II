@@ -3,6 +3,14 @@
 <span>flatmap / switchmap / concatmap / exhaustmap</span>
 <br />
 <br />
+
+<span>Number Stream : 0 , 1, 2 --------------(1000ms)</span>
+
+<br />
+<br />
+<span>Letter Stream : a , b , c ------------(500ms)</span>
+<br />
+<br />
 <select
   [(ngModel)]="selectedOperator"
   (ngModelChange)="onChangeOperator()"
@@ -19,6 +27,4 @@
   <tr>
     <td *ngFor="let item of arr">{{item}}</td>
   </tr>
-
-  <tr></tr>
 </table>
